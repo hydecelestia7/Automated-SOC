@@ -44,10 +44,10 @@ Cloud Deployment Alternative: A Digital Ocean account with access to their $200 
 # Understanding the Components
 
    # Wazuh Agent
-  The Wazuh agent, installed on the Windows 10 Client endpoint, continuously monitors system activities, collects security events, and securely transmits this data to the Wazuh Manager. It plays a crucial role in   endpoint security by detecting anomalies, unauthorized access, and suspicious behaviors in real-time.
+  The Wazuh agent, installed on the Windows 10 Client endpoint, continuously monitors system activities, collects security events, and securely transmits this data to the Wazuh Manager. It plays a crucial role     in endpoint security by detecting anomalies, unauthorized access, and suspicious behaviors in real-time.
 
   # Wazuh Manager
-  Deployed either in the cloud or on-premises, the Wazuh Manager serves as the centralized hub for receiving, processing, and analyzing security events. It applies predefined rules, machine   learning algorithms,   and threat intelligence feeds to identify security threats. Upon detection, it generates alerts and initiates predefined mitigation strategies to contain threats promptly.
+  Deployed either in the cloud or on-premises, the Wazuh Manager serves as the centralized hub for receiving, processing, and analyzing security events. It applies predefined rules, machine learning                algorithms, and threat intelligence feeds to identify security threats. Upon detection, it generates alerts and initiates predefined mitigation strategies to contain threats promptly.
 
   # Shuffle (SOAR Platform)
   
@@ -61,7 +61,114 @@ Cloud Deployment Alternative: A Digital Ocean account with access to their $200 
 
 # The Hive
 A cloud-based incident response and case management platform, TheHive provides SOC teams with a structured environment to analyze threats, coordinate response efforts, and document investigations. It enhances collaboration among analysts and ensures consistency in handling security incidents.
-  
+
+![image](https://github.com/user-attachments/assets/342968b3-d251-43a6-a882-5368469203db)
+
+
+# Response Workflow
+
+1. Wazuh detects a potential security event and forwards the alert to Shuffle.
+
+2. Shuffle processes the alert and enriches it using OSINT sources.
+
+3. Shuffle integrates with TheHive to create a new case for investigation.
+
+4. SOC analysts receive alert notifications and begin investigating the incident using TheHive.
+
+5. Analysts interact with Shuffle to execute remediation actions, coordinate responses, and provide feedback for continuous improvement.
+
+# Installation Guide
+
+This lab consists of three primary components:
+
+1. Setting up Windows 10 Client with Sysmon
+
+  1. Create a Windows 10 Virtual Machine (VM) using a Windows 10 ISO.
+
+  2. Download Sysmon from Sysinternals and obtain the sysmonconfig.xml file from this                repository.
+
+  3. Extract the Sysmon archive and move sysmonconfig.xml into the extracted folder.
+
+  4. Open PowerShell as Administrator and execute:
+
+    .\Sysmon64.exe -i .\sysmonconfig.xml
+
+Verify that Sysmon is successfully installed:
+
+Open Services.msc and confirm Sysmon64 is running.
+
+Check Event Manager under Application and Services Logs > Microsoft > Windows > Sysmon.
+
+2. Deploying Wazuh Server
+
+You can set up the Wazuh server either on-premises or in the cloud
+Option 1: On-Premises (Virtual Machine Deployment)
+
+Use Ubuntu 22.04.
+
+Allocate 4 vCPUs, 8GB RAM, and 50GB storage.
+
+Follow the Wazuh Quickstart Guide for installation.
+
+Option 2: Cloud Deployment (Digital Ocean)
+
+  1. Create a new Droplet with the following configuration:
+
+    OS: Ubuntu 22.04 (LTS)
+
+    Basic CPU, 8GB RAM
+
+  2. Set up a Firewall:
+
+    Navigate to Networking > Firewalls.
+
+    Restrict inbound traffic and limit access to trusted IPs.
+
+  3. SSH into the Wazuh VM and update packages:
+
+    apt-get update && apt-get upgrade -y
+
+  4. Install Wazuh:
+
+    curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
+
+  5. Access the Wazuh Dashboard at https://[WAZUH-DROPLET-IP]/.
+
+3. Installing TheHive
+
+You can deploy TheHive either on-premises or in the cloud.
+
+Option 1: Virtual Machine Deployment
+
+  Use Ubuntu 22.04.
+
+  Follow TheHive Installation Guide.
+
+Option 2: Cloud Deployment (Digital Ocean)
+
+1. Create a new Droplet:
+
+  OS: Ubuntu 22.04 (LTS)
+
+  Basic CPU, 8GB RAM
+
+2. Attach a Firewall:
+
+  Navigate to Droplets > TheHive > Networking > Firewalls.
+
+  Restrict inbound traffic and allow only trusted connections.
+
+3. SSH into the VM and install dependencies:
+
+  Install Java, Cassandra, Elasticsearch, and TheHive following the official documentation.
+
+# Conclusion
+
+This SOC automation lab offers practical hands-on experience in threat detection, incident response, and cybersecurity automation. By deploying Wazuh, Shuffle, and TheHive, participants gain in-depth knowledge of real-world SOC operations, automation strategies, and security monitoring best practices.
+
+
+
+
 
 
 
