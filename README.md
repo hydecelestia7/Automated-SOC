@@ -95,14 +95,14 @@ This lab consists of three primary components:
 
   5. Verify that Sysmon is successfully installed:
 
-  6. Open Services.msc and confirm Sysmon64 is running.
+      Open Services.msc and confirm Sysmon64 is running.
 
-  7. Check Event Manager under Application and Services Logs > Microsoft > Windows > Sysmon.
+      Check Event Manager under Application and Services Logs > Microsoft > Windows > Sysmon.
 
-2. Deploying Wazuh Server
+# 2. Deploying Wazuh Server
 
 You can set up the Wazuh server either on-premises or in the cloud
-Option 1: On-Premises (Virtual Machine Deployment)
+# Option 1: On-Premises (Virtual Machine Deployment)
 
 - Use Ubuntu 22.04.
 
@@ -110,7 +110,7 @@ Option 1: On-Premises (Virtual Machine Deployment)
 
 - Follow the Wazuh Quickstart Guide for installation.
 
-Option 2: Cloud Deployment (Digital Ocean)
+# Option 2: Cloud Deployment (Digital Ocean)
 
   1. Create a new Droplet with the following configuration:
 
@@ -134,7 +134,7 @@ Option 2: Cloud Deployment (Digital Ocean)
 
   5. Access the Wazuh Dashboard at https://[WAZUH-DROPLET-IP]/.
 
-3. Installing TheHive
+# 3. Installing TheHive
 
   You can deploy TheHive either on-premises or in the cloud.
 
