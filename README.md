@@ -59,8 +59,8 @@ Cloud Deployment Alternative: A Digital Ocean account with access to their $200 
 
   Alerting & Notifications – Automates email notifications and escalation workflows to ensure rapid analyst response.
 
-# The Hive
-A cloud-based incident response and case management platform, TheHive provides SOC teams with a structured environment to analyze threats, coordinate response efforts, and document investigations. It enhances collaboration among analysts and ensures consistency in handling security incidents.
+  # The Hive
+  A cloud-based incident response and case management platform, TheHive provides SOC teams with a structured environment to analyze threats, coordinate response efforts, and document investigations. It enhances    collaboration among analysts and ensures consistency in handling security incidents.
 
 ![image](https://github.com/user-attachments/assets/342968b3-d251-43a6-a882-5368469203db)
 
@@ -93,36 +93,36 @@ This lab consists of three primary components:
 
     .\Sysmon64.exe -i .\sysmonconfig.xml
 
-Verify that Sysmon is successfully installed:
+  5. Verify that Sysmon is successfully installed:
 
-Open Services.msc and confirm Sysmon64 is running.
+  6. Open Services.msc and confirm Sysmon64 is running.
 
-Check Event Manager under Application and Services Logs > Microsoft > Windows > Sysmon.
+  7. Check Event Manager under Application and Services Logs > Microsoft > Windows > Sysmon.
 
 2. Deploying Wazuh Server
 
 You can set up the Wazuh server either on-premises or in the cloud
 Option 1: On-Premises (Virtual Machine Deployment)
 
-Use Ubuntu 22.04.
+- Use Ubuntu 22.04.
 
-Allocate 4 vCPUs, 8GB RAM, and 50GB storage.
+- Allocate 4 vCPUs, 8GB RAM, and 50GB storage.
 
-Follow the Wazuh Quickstart Guide for installation.
+- Follow the Wazuh Quickstart Guide for installation.
 
 Option 2: Cloud Deployment (Digital Ocean)
 
   1. Create a new Droplet with the following configuration:
 
-    OS: Ubuntu 22.04 (LTS)
+      OS: Ubuntu 22.04 (LTS)
 
-    Basic CPU, 8GB RAM
+      Basic CPU, 8GB RAM
 
   2. Set up a Firewall:
 
-    Navigate to Networking > Firewalls.
+      Navigate to Networking > Firewalls.
 
-    Restrict inbound traffic and limit access to trusted IPs.
+      Restrict inbound traffic and limit access to trusted IPs.
 
   3. SSH into the Wazuh VM and update packages:
 
@@ -136,7 +136,7 @@ Option 2: Cloud Deployment (Digital Ocean)
 
 3. Installing TheHive
 
-You can deploy TheHive either on-premises or in the cloud.
+  You can deploy TheHive either on-premises or in the cloud.
 
 Option 1: Virtual Machine Deployment
 
@@ -148,19 +148,19 @@ Option 2: Cloud Deployment (Digital Ocean)
 
 1. Create a new Droplet:
 
-  OS: Ubuntu 22.04 (LTS)
+    OS: Ubuntu 22.04 (LTS)
 
-  Basic CPU, 8GB RAM
+    Basic CPU, 8GB RAM
 
 2. Attach a Firewall:
 
-  Navigate to Droplets > TheHive > Networking > Firewalls.
+    Navigate to Droplets > TheHive > Networking > Firewalls.
 
-  Restrict inbound traffic and allow only trusted connections.
+    Restrict inbound traffic and allow only trusted connections.
 
 3. SSH into the VM and install dependencies:
 
-  Install Java, Cassandra, Elasticsearch, and TheHive following the official documentation.
+    Install Java, Cassandra, Elasticsearch, and TheHive following the official documentation.
 
 # Conclusion
 
