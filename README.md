@@ -215,9 +215,8 @@ This project successfully integrates Wazuh, TheHive, and Shuffle to create an au
 
 Future improvements can include advanced correlation rules, integrating additional threat intelligence sources, and refining automation workflows.
 
-7. References
-
-   https://www.mydfir.com/
+# 7. References
+- https://www.mydfir.com/
 
 
 
