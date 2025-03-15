@@ -1,172 +1,131 @@
 # Automated Security Operations Center (SOC)
 
-# Overview
+# 1. Introduction
 
-The primary objective of this lab is to create an automated Security Operations Center (SOC) environment that closely mirrors real-world incident detection, analysis, and response scenarios. Using open-source software, this lab can be deployed at no cost, either fully on-premises or partially in the cloud via a trial Digital Ocean account.
+# 1.1 Overview
 
-This lab serves as a practical learning environment for security professionals, students, and researchers interested in cybersecurity operations, providing hands-on experience with security monitoring, incident response, and automation workflows.
+The SOC Automation Project is designed to create an automated Security Operations Center (SOC) workflow that enhances event monitoring, alerting, and incident response. By leveraging open-source tools such as Wazuh, Shuffle, and TheHive, this project optimizes SOC operations by automating repetitive tasks, reducing the workload on security analysts, and improving the overall efficiency of security monitoring.
 
-# Key Components
+# 1.2 Purpose and Goals
 
-This lab incorporates several free and open-source tools to replicate a real-world SOC:
+Automate Event Collection and Analysis – Ensures security events are collected, logged, and analyzed in real-time, reducing manual intervention.
 
-Wazuh – A comprehensive SIEM and XDR solution used for event collection, log analysis, and threat detection.
+Streamline the Alerting Process – Automates the process of generating, forwarding, and triaging alerts to minimize response times.
 
-Shuffle – A Security Orchestration, Automation, and Response (SOAR) platform that enhances operational efficiency by automating incident response workflows.
+Enhance Incident Response Capabilities – Introduces automated response actions for security incidents, ensuring a swift and structured response.
 
-TheHive – A case management platform designed for efficient documentation, collaboration, and structured response to security incidents.
+Improve SOC Efficiency – Reduces analyst workload by automating log analysis, threat correlation, and case management.
 
-By leveraging automation and integrating these tools, this lab aims to accelerate threat detection, optimize SOC workflows, and provide a deeper understanding of security operations in an enterprise environment.
+# 1.3 SOC Automation Diagram
+![image](https://github.com/user-attachments/assets/5069b97c-b5a0-446f-abcb-299211eec822)
 
-# Architecture Diagram
+# 2. Prerequisites
 
+# 2.1 Hardware Requirements
 
-![soc-automation-diagram](https://github.com/user-attachments/assets/641accf0-b792-4111-9c8e-fcb63530b276)
+To successfully set up the SOC Automation Lab, ensure your system meets the following hardware requirements:
 
-                          Data Flow through the SOC environment
+A host machine capable of running multiple virtual machines.
 
- # Prerequisites
+Minimum 16GB RAM and 4 vCPUs (recommended 32GB RAM for smoother performance).
 
-Before proceeding with the setup, ensure that you have the following prerequisites in place:
+500GB+ disk space to store log files and system images.
 
-# System Requirements
+# 2.2 Software Requirements
 
-Hypervisor: Oracle VirtualBox (recommended) for creating virtual machines.
+VMware Workstation/Fusion or VirtualBox – Used for virtualization.
 
-Operating System Images:
+Windows 10 ISO – Acts as the client machine for security event generation.
 
-Windows 10 ISO: Required for setting up the Client PC.
+Ubuntu 22.04 ISO – Serves as the operating system for Wazuh and TheHive.
 
-Ubuntu 22.04.3 LTS ISO: Needed for on-premises installation.
+Sysmon – Provides detailed Windows event logging for threat detection.
 
-Cloud Deployment Alternative: A Digital Ocean account with access to their $200 free trial for cloud-based deployment.
+# 2.3 Tools and Platforms
 
-# Understanding the Components
+Wazuh – A powerful open-source SIEM and XDR platform for log collection and analysis.
 
-   # Wazuh Agent
-  The Wazuh agent, installed on the Windows 10 Client endpoint, continuously monitors system activities, collects security events, and securely transmits this data to the Wazuh Manager. It plays a crucial role     in endpoint security by detecting anomalies, unauthorized access, and suspicious behaviors in real-time.
+Shuffle – A SOAR tool that automates security workflows, reducing manual intervention.
 
-  # Wazuh Manager
-  Deployed either in the cloud or on-premises, the Wazuh Manager serves as the centralized hub for receiving, processing, and analyzing security events. It applies predefined rules, machine learning                algorithms, and threat intelligence feeds to identify security threats. Upon detection, it generates alerts and initiates predefined mitigation strategies to contain threats promptly.
+TheHive – A Security Incident Response Platform (SIRP) for managing investigations and response actions.
 
-  # Shuffle (SOAR Platform)
-  
-  Shuffle plays a critical role in automating SOC workflows and improving response efficiency. It performs the following key functions:
+VirusTotal – A cloud-based malware scanning and intelligence platform for file and URL analysis.
 
-  Threat Intelligence Enrichment – Leverages OSINT (Open-Source Intelligence) to enhance detected Indicators of Compromise (IOCs).
+# 2.4 Prior Knowledge
 
-  Automated Case Management – Integrates with TheHive to create structured security incident cases for efficient investigation and response.
+Familiarity with Virtual Machines (VMs) and virtualization platforms.
 
-  Alerting & Notifications – Automates email notifications and escalation workflows to ensure rapid analyst response.
+Basic Linux command-line experience (file manipulation, installing packages, and editing config files).
 
-  # The Hive
-  A cloud-based incident response and case management platform, TheHive provides SOC teams with a structured environment to analyze threats, coordinate response efforts, and document investigations. It enhances    collaboration among analysts and ensures consistency in handling security incidents.
+Understanding of SOC operations, log analysis, and threat detection.
 
-![image](https://github.com/user-attachments/assets/342968b3-d251-43a6-a882-5368469203db)
+# 3. Setup
 
+3.1 Install and Configure Windows 10 with Sysmon
 
-# Response Workflow
+# 3.1.1 Install Windows 10 on VMware/VirtualBox
 
-1. Wazuh detects a potential security event and forwards the alert to Shuffle.
+Download and install VMware Workstation/VirtualBox.
 
-2. Shuffle processes the alert and enriches it using OSINT sources.
+Create a new virtual machine and allocate 4GB RAM, 2 vCPUs, and 50GB storage.
 
-3. Shuffle integrates with TheHive to create a new case for investigation.
+Attach the Windows 10 ISO and complete the installation.
 
-4. SOC analysts receive alert notifications and begin investigating the incident using TheHive.
+# 3.1.2 Install Sysmon for Advanced Logging
 
-5. Analysts interact with Shuffle to execute remediation actions, coordinate responses, and provide feedback for continuous improvement.
+Download Sysmon from the Sysinternals website.
 
-# Installation Guide
+Obtain a Sysmon configuration file (from GitHub or DFIR resources).
 
-This lab consists of three primary components:
+Extract the Sysmon archive and navigate to the extracted folder in PowerShell.
 
-1. Setting up Windows 10 Client with Sysmon
+Install Sysmon using:
 
-  1. Create a Windows 10 Virtual Machine (VM) using a Windows 10 ISO.
+.\Sysmon64.exe -i .\sysmonconfig.xml
 
-  2. Download Sysmon from Sysinternals and obtain the sysmonconfig.xml file from this                repository.
+Verify Sysmon installation:
 
-  3. Extract the Sysmon archive and move sysmonconfig.xml into the extracted folder.
+Open Services.msc and check for Sysmon64.
 
-  4. Open PowerShell as Administrator and execute:
+Open Event Viewer > Applications and Services Logs > Microsoft > Windows > Sysmon.
 
-    .\Sysmon64.exe -i .\sysmonconfig.xml
+# 3.2 Set Up Wazuh Server
 
-  5. Verify that Sysmon is successfully installed:
+# 3.2.1 Deploy Wazuh on a Cloud Server (DigitalOcean)
 
-      Open Services.msc and confirm Sysmon64 is running.
+Create a DigitalOcean Droplet with Ubuntu 22.04.
 
-      Check Event Manager under Application and Services Logs > Microsoft > Windows > Sysmon.
+Set a strong root password and name the droplet Wazuh.
 
-# 2. Deploying Wazuh Server
+Configure a firewall:
 
-You can set up the Wazuh server either on-premises or in the cloud
-# Option 1: On-Premises (Virtual Machine Deployment)
+Navigate to Networking > Firewalls.
 
-- Use Ubuntu 22.04.
+Restrict inbound traffic and allow only trusted IPs.
 
-- Allocate 4 vCPUs, 8GB RAM, and 50GB storage.
+Connect to the server via SSH:
 
-- Follow the Wazuh Quickstart Guide for installation.
+ssh root@[WAZUH-SERVER-IP]
 
-# Option 2: Cloud Deployment (Digital Ocean)
+Update and upgrade packages:
 
-  1. Create a new Droplet with the following configuration:
+sudo apt-get update && sudo apt-get upgrade -y
 
-      OS: Ubuntu 22.04 (LTS)
+Install Wazuh:
 
-      Basic CPU, 8GB RAM
+curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
 
-  2. Set up a Firewall:
+Access the Wazuh Web Interface at:
 
-      Navigate to Networking > Firewalls.
+https://[WAZUH-SERVER-IP]/
 
-      Restrict inbound traffic and limit access to trusted IPs.
+# 3.2.2 Deploy Wazuh Locally (On-Premises)
 
-  3. SSH into the Wazuh VM and update packages:
+Install Ubuntu 22.04.
 
-    apt-get update && apt-get upgrade -y
+Allocate 8GB RAM, 4 vCPUs, and 50GB Storage.
 
-  4. Install Wazuh:
-
-    curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
-
-  5. Access the Wazuh Dashboard at https://[WAZUH-DROPLET-IP]/.
-
-# 3. Installing TheHive
-
-  You can deploy TheHive either on-premises or in the cloud.
-
-Option 1: Virtual Machine Deployment
-
-  Use Ubuntu 22.04.
-
-  Follow TheHive Installation Guide.
-
-Option 2: Cloud Deployment (Digital Ocean)
-
-1. Create a new Droplet:
-
-    OS: Ubuntu 22.04 (LTS)
-
-    Basic CPU, 8GB RAM
-
-2. Attach a Firewall:
-
-    Navigate to Droplets > TheHive > Networking > Firewalls.
-
-    Restrict inbound traffic and allow only trusted connections.
-
-3. SSH into the VM and install dependencies:
-
-    Install Java, Cassandra, Elasticsearch, and TheHive following the official documentation.
-
-# Conclusion
-
-This SOC automation lab offers practical hands-on experience in threat detection, incident response, and cybersecurity automation. By deploying Wazuh, Shuffle, and TheHive, participants gain in-depth knowledge of real-world SOC operations, automation strategies, and security monitoring best practices.
-
-
+Follow the Wazuh Quickstart Guide for installation.
 
 
 
