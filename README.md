@@ -82,26 +82,34 @@ Familiarity with Virtual Machines (VMs) and virtualization platforms.
 4. Install Sysmon using:
 
        .\Sysmon64.exe -i .\sysmonconfig.xml
+   ![image](https://github.com/user-attachments/assets/c76a414e-2c4c-4f83-bf52-7de8bdcab229)
 
-5. Verify Sysmon installation:
+
+6. Verify Sysmon installation:
 
  - Open Services.msc and check for Sysmon64.
 
  - Open Event Viewer > Applications and Services Logs > Microsoft > Windows > Sysmon.
+   ![image](https://github.com/user-attachments/assets/861c32a5-a6a2-4b97-9d58-ebbc07c7a094)
+
 
 # 3.2 Set Up Wazuh Server
 
 # 3.2.1 Deploy Wazuh on a Cloud Server (DigitalOcean)
 
 1. Create a DigitalOcean Droplet with Ubuntu 22.04.
+   ![image](https://github.com/user-attachments/assets/f008dd23-0a0a-44ff-a669-117a1324e308)
 
-2. Set a strong root password and name the droplet Wazuh.
 
-3. Configure a firewall:
+3. Set a strong root password and name the droplet Wazuh.
+
+4. Configure a firewall:
 
  - Navigate to Networking > Firewalls.
 
  - Restrict inbound traffic and allow only trusted IPs.
+![image](https://github.com/user-attachments/assets/ef505ffe-38b6-4f08-a799-b84a75341465)
+
 
 4. Connect to the server via SSH:
 
@@ -110,14 +118,18 @@ Familiarity with Virtual Machines (VMs) and virtualization platforms.
 5. Update and upgrade packages:
 
        sudo apt-get update && sudo apt-get upgrade -y
+   ![image](https://github.com/user-attachments/assets/54bad6e0-e1c7-4877-9493-9020963d9424)
 
-6. Install Wazuh:
+
+7. Install Wazuh:
 
        curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
 
- 7. Access the Wazuh Web Interface at:
+ 8. Access the Wazuh Web Interface at:
 
         https://[WAZUH-SERVER-IP]/
+    ![image](https://github.com/user-attachments/assets/95145f3c-b555-4a53-a3aa-ed43ab50cbcb)
+
 
 # 3.2.2 Deploy Wazuh Locally (On-Premises)
 
@@ -126,24 +138,28 @@ Familiarity with Virtual Machines (VMs) and virtualization platforms.
 - Allocate 8GB RAM, 4 vCPUs, and 50GB Storage.
 
 - Follow the Wazuh Quickstart Guide for installation.
+  ![image](https://github.com/user-attachments/assets/d2516b19-6223-4b8b-9260-96c1c9f69ca8)
+
 
 # 3.3 Install TheHive
 
 # 3.3.1 Deploy TheHive on a Cloud Server (DigitalOcean)
 
 1. Create a DigitalOcean Droplet for TheHive (Ubuntu 22.04).
+![image](https://github.com/user-attachments/assets/3ccaaf22-1c90-4ccc-b267-b807c96c1882)
 
-2. Install dependencies:
+
+3. Install dependencies:
 
        sudo apt install wget gnupg apt-transport-https git ca-certificates curl -y
 
-3. Install Java, Cassandra, and Elasticsearch.
+4. Install Java, Cassandra, and Elasticsearch.
 
-4. Install TheHive:
+5. Install TheHive:
 
        sudo apt-get install -y thehive
 
-5. Access TheHive Web Interface at:
+6. Access TheHive Web Interface at:
 
        http://[THEHIVE-SERVER-IP]:9000
 
@@ -152,8 +168,10 @@ Familiarity with Virtual Machines (VMs) and virtualization platforms.
 # 4.1 Integrate Wazuh with Shuffle
 
 1. Create a Webhook in Shuffle and copy the URL.
+   ![image](https://github.com/user-attachments/assets/ef8551d2-b553-450e-875f-c08bd99d9c47)
 
-2. Modify Wazuh Configuration:
+
+3. Modify Wazuh Configuration:
 
        <integration>
          <name>shuffle</name>
@@ -162,9 +180,11 @@ Familiarity with Virtual Machines (VMs) and virtualization platforms.
          <alert_format>json</alert_format>
        </integration>
 
-3. Restart Wazuh:
+4. Restart Wazuh:
 
        systemctl restart wazuh-manager.service
+   ![image](https://github.com/user-attachments/assets/13db983c-b1c8-4688-905a-aa8da3887da5)
+
 
 # 4.2 Automate Incident Handling with TheHive
 
@@ -173,8 +193,15 @@ Familiarity with Virtual Machines (VMs) and virtualization platforms.
 2. Query VirusTotal for threat intelligence.
 
 3. Forward alerts to TheHive for investigation.
+   ![image](https://github.com/user-attachments/assets/e4c53492-54b7-4b2f-a0b9-bc2aed42c55d)
 
-4. Send Email Notifications to SOC Analysts.
+   ![image](https://github.com/user-attachments/assets/519a41ec-06ed-4603-a711-94cdc81612f2)
+
+5. Send Email Notifications to SOC Analysts.
+
+![image](https://github.com/user-attachments/assets/4a88baa8-a1e6-4fb7-9d32-e283ab31d6b1)
+
+![image](https://github.com/user-attachments/assets/64b44344-3395-4033-bd3e-27d0300b3ab4)
 
 # 5. Conclusion
 
@@ -188,9 +215,10 @@ This project successfully integrates Wazuh, TheHive, and Shuffle to create an au
 
 Future improvements can include advanced correlation rules, integrating additional threat intelligence sources, and refining automation workflows.
 
-Acknowledgment
+7. References
+-        https://www.mydfir.com/
 
-This project greatly benefited from the insights and tutorials provided by the DFIR YouTube channel.
+
 
 
 
